@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RubberMate — Rubber farming, prices & schemes for Kerala</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bark: #3E2F23;
+    --cream: #FBF7F0;
+    --forest: #1F3D2B;
+    --forest-dark: #14281B;
+    --gold: #C9A227;
+    --rust: #A6512E;
+    --ink: #24211C;
+    --line: rgba(36,33,28,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+
+  /* --- Signature motif: the tapping cut --- */
+  .tap-cut{
+    height:14px;
+    width:100%;
+    background:
+      linear-gradient(115deg, transparent 48%, var(--gold) 48%, var(--gold) 52%, transparent 52%) 0 0/40px 100%,
+      linear-gradient(65deg, transparent 48%, var(--rust) 48%, var(--rust) 52%, transparent 52%) 20px 0/40px 100%;
+    opacity:0.85;
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 5vw;
+    border-bottom:1px solid var(--line);
+  }
+  .wordmark{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:20px;
+    font-weight:600;
+    color:var(--forest-dark);
+  }
+  .wordmark .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:var(--rust);
+    display:inline-block;
+  }
+  nav{display:flex;gap:28px;font-size:14px;font-weight:500;color:var(--bark);}
+  nav a:hover{color:var(--rust);}
+
+  .hero{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:40px;
+    padding:64px 5vw 56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(34px,4.4vw,54px);
+    font-weight:600;
+    color:var(--forest-dark);
+    max-width:11ch;
+  }
+  .hero p{
+    max-width:46ch;
+    color:var(--bark);
+    font-size:16px;
+    margin-top:18px;
+  }
+  .hero-links{margin-top:28px;display:flex;gap:14px;}
+  .btn{
+    padding:11px 20px;
+    border-radius:3px;
+    font-size:14px;
+    font-weight:600;
+  }
+  .btn-primary{background:var(--forest-dark);color:var(--cream);}
+  .btn-ghost{border:1px solid var(--bark);color:var(--bark);}
+
+  /* Price ticker as the hero thesis */
+  .ticker{
+    background:var(--forest-dark);
+    color:var(--cream);
+    border-radius:6px;
+    padding:28px 30px;
+    position:relative;
+    overflow:hidden;
+  }
+  .ticker::before{
+    content:"";
+    position:absolute; inset:0;
+    background:
+      linear-gradient(115deg, transparent 47%, rgba(201,162,39,0.18) 47%, rgba(201,162,39,0.18) 50%, transparent 50%) 0 0/70px 100%;
+    pointer-events:none;
+  }
+  .ticker-label{font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);}
+  .ticker-grade{font-size:14px;color:rgba(251,247,240,0.7);margin-top:4px;}
+  .ticker-value{font-size:44px;font-weight:700;margin-top:10px;}
+  .ticker-value sup{font-size:16px;font-weight:500;margin-left:6px;color:rgba(251,247,240,0.65);}
+  .ticker-change{
+    display:inline-block;margin-top:12px;
+    font-size:12px; padding:4px 10px; border-radius:20px;
+    background:rgba(201,162,39,0.18); color:var(--gold);
+  }
+  .ticker-note{font-size:11px;color:rgba(251,247,240,0.5);margin-top:16px;}
+
+  .categories{
+    display:flex; gap:0; padding:0 5vw; border-bottom:1px solid var(--line); border-top:1px solid var(--line);
+  }
+  .categories span{
+    padding:16px 20px; font-size:13px; font-weight:500; color:var(--bark);
+    border-right:1px solid var(--line);
+  }
+  .categories span:first-child{padding-left:0;}
+
+  .articles{padding:56px 5vw 20px;}
+  .articles-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:26px;}
+  .articles-head h2{font-size:26px; color:var(--forest-dark);}
+  .articles-head span{font-size:13px; color:var(--rust);}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .card{
+    background:var(--cream);
+    padding:24px;
+  }
+  .card .kicker{font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--rust); font-weight:600;}
+  .card h3{font-size:18px; margin-top:10px; color:var(--ink); font-weight:600;}
+  .card p{font-size:13.5px; color:var(--bark); margin-top:8px;}
+
+  footer{
+    padding:30px 5vw; margin-top:40px;
+    display:flex; justify-content:space-between; align-items:center;
+    font-size:12px; color:var(--bark);
+  }
+
+  @media (max-width:760px){
+    .hero{grid-template-columns:1fr; padding:40px 6vw;}
+    nav{display:none;}
+    .categories{overflow-x:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wordmark"><span class="dot"></span>RubberMate</div>
+  <nav>
+    <a href="#">Cultivation</a>
+    <a href="#">Prices</a>
+    <a href="#">Schemes</a>
+    <a href="#">Pests &amp; disease</a>
+  </nav>
+</header>
+
+<div class="tap-cut"></div>
+
+<section class="hero">
+  <div>
+    <h1>Practical rubber farming, in plain language.</h1>
+    <p>Tapping timing, Rubber Board schemes, pest warnings, and daily prices — written for families managing rubber land in Kerala, not textbooks written for agronomists.</p>
+    <div class="hero-links">
+      <a href="#" class="btn btn-primary">Read today's articles</a>
+      <a href="#" class="btn btn-ghost">Check the price</a>
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-label">Kottayam market — today</div>
+    <div class="ticker-grade">RSS-4 grade</div>
+    <div class="mono ticker-value">₹198<sup>/kg</sup></div>
+    <div class="ticker-change mono">▲ 2.1% this week</div>
+    <div class="ticker-note">Updated manually each morning · automated feed coming soon</div>
+  </div>
+</section>
+
+<div class="categories">
+  <span>🌱 Cultivation</span>
+  <span>📈 Prices</span>
+  <span>📋 Schemes</span>
+  <span>🐛 Pests &amp; disease</span>
+</div>
+
+<section class="articles">
+  <div class="articles-head">
+    <h2>Latest articles</h2>
+    <span>Updated weekly</span>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <div class="kicker">Cultivation</div>
+      <h3>When to start tapping this season</h3>
+      <p>How to read the tree, not just the calendar — bark readiness, monsoon timing, and the mistakes that cost a season's yield.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Schemes</div>
+      <h3>Rubber Board replanting subsidy, explained</h3>
+      <p>Who qualifies, what documents you actually need, and how long approval really takes — in plain terms, not government language.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Pests &amp; disease</div>
+      <h3>Spotting leaf disease before it spreads</h3>
+      <p>The early signs most families miss, and what to do in the first 48 hours.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Prices</div>
+      <h3>Why rubber prices swing — and what to watch</h3>
+      <p>A plain-language look at what actually moves the RSS-4 rate week to week.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Cultivation</div>
+      <h3>Rubber vs. other crops: what's changed</h3>
+      <p>An honest look at falling margins and what families in Kerala are actually doing about it.</p>
+    </div>
+    <div class="card">
+      <div class="kicker">Schemes</div>
+      <h3>Insurance for rubber smallholders</h3>
+      <p>What's covered, what isn't, and how to file a claim without a middleman.</p>
+    </div>
+  </div>
+</section>
+
+<div class="tap-cut"></div>
+
+<footer>
+  <span>RubberMate — practical rubber farming information for Kerala families</span>
+  <span>Built with care in Kerala</span>
+</footer>
+
+</body>
+</html>
