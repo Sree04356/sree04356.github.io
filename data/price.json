@@ -3,6 +3,6 @@
   "market": "Kottayam",
   "price": 282,
   "change_percent": 0,
-  "direction": "f",
+  "direction": "flat",
   "last_updated": "2026-07-18"
 }
