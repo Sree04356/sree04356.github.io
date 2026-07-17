@@ -190,13 +190,29 @@
   </div>
 
   <div class="ticker">
-    <div class="ticker-label">Kottayam market — today</div>
-    <div class="ticker-grade">RSS-4 grade</div>
-    <div class="mono ticker-value">₹198<sup>/kg</sup></div>
-    <div class="ticker-change mono">▲ 2.1% this week</div>
-    <div class="ticker-note">Updated manually each morning · automated feed coming soon</div>
+    <div class="ticker-label" id="ticker-label">Kottayam market — today</div>
+    <div class="ticker-grade" id="ticker-grade">RSS-4 grade</div>
+    <div class="mono ticker-value" id="ticker-value">₹—<sup>/kg</sup></div>
+    <div class="ticker-change mono" id="ticker-change">—</div>
+    <div class="ticker-note" id="ticker-note">Loading today's price…</div>
   </div>
 </section>
+
+<script>
+  fetch('data/price.json')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('ticker-label').textContent = data.market + ' market — today';
+      document.getElementById('ticker-grade').textContent = data.grade + ' grade';
+      document.getElementById('ticker-value').innerHTML = '₹' + data.price + '<sup>/kg</sup>';
+      const arrow = data.direction === 'up' ? '▲' : (data.direction === 'down' ? '▼' : '→');
+      document.getElementById('ticker-change').textContent = arrow + ' ' + data.change_percent + '% this week';
+      document.getElementById('ticker-note').textContent = 'Last updated ' + data.last_updated + ' · updated manually each day';
+    })
+    .catch(() => {
+      document.getElementById('ticker-note').textContent = 'Price data unavailable right now';
+    });
+</script>
 
 <div class="categories">
   <span>🌱 Cultivation</span>
