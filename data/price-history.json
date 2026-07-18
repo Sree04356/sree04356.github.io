@@ -1,3 +1,14 @@
 [
-  { "date": "2026-07-18", "price": 282, "change_percent": 1.1, "direction": "up" }
+  {
+    "date": "2026-07-18",
+    "price": 282,
+    "change_percent": 1.1,
+    "direction": "up"
+  },
+  {
+    "date": "2026-07-18",
+    "price": 282.0,
+    "change_percent": 0.0,
+    "direction": "flat"
+  }
 ]
